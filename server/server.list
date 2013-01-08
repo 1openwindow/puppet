@@ -1,0 +1,3 @@
+#Remote Server List, One Line, One Server. Puppet read server line by line.
+demo1.test.puppet.com
+demo2.test.puppet.com
