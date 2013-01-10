@@ -12,7 +12,7 @@ public class App {
 	private static final String	CLASSNAME	= App.class.getName();
 	
 	public static void main(String[] args) {
-		System.out.println("Hello World!");
+		System.out.println("Hello World! Alpha Submmit");
 		//logger.debug("This is debug message");
 		//myMethod();
 		//logger.info("this is info message");
