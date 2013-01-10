@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import com.dance.puppet.processor.MyRunnable;
 import com.dance.puppet.util.FileHelper;
@@ -16,8 +17,11 @@ public class BoosStrap {
 	static Logger	logger	= Logger.getLogger(BootStrap.class);
 
 	public static void main(String[] args) {
+		//Load log4j Properties
+		PropertyConfigurator.configure("properties/log4j.properties");
+		
 		ArrayList<String> list = FileHelper.fileToList("server/localtest.list");
-		String onelineCommond = FileHelper.bashToOneLine("script/test.sh");
+		String onelineCommond = FileHelper.bashToOneLine("script/echoVar.sh");
 		logger.info("execute the following commond");
 		logger.info(onelineCommond);
 		String user = null;
