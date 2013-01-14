@@ -16,16 +16,54 @@ import com.dance.puppet.util.FileHelper;
 /**
  * 
  * @author Chan Chen
- *
+ * 
  */
-public final class BootStrap {
-	
-	static Logger logger = Logger.getLogger(BootStrap.class);
-	
-	public static void main(String[] args) {
-		//Load log4j Properties
-		PropertyConfigurator.configure("properties/log4j.properties");
+public final class Bootstrap {
+
+	static Logger	logger	= Logger.getLogger(Bootstrap.class);
+
+	public Bootstrap() {
+		loadConfig();
+		parseScript();
+		sendCommond();
+		startReceiever();
+		displayResult();
+	}
+
+	public void init(){
 		
+	}
+	
+	public Bootstrap loadConfig() {
+		return this;
+	}
+
+	public Bootstrap parseScript() {
+		return this;
+	}
+
+	public Bootstrap sendCommond() {
+		return this;
+	}
+
+	public Bootstrap startReceiever() {
+		return this;
+	}
+
+	public Bootstrap displayResult() {
+		return this;
+	}
+
+	public static void main(String[] args) {
+		// Load Config Properties
+
+		// Parse Script
+
+		// Run Engine
+
+		// Load log4j Properties
+		PropertyConfigurator.configure("properties/log4j.properties");
+
 		ArrayList<String> list = FileHelper.fileToList("server/server.list");
 		String onelineCommond = FileHelper.bashToOneLine("script/test.sh");
 		logger.info("execute the following commond");
@@ -43,7 +81,7 @@ public final class BootStrap {
 
 		String cmd = "";
 		Long beforeTimer = System.currentTimeMillis();
-		//logger.info("Before Timer is: " + beforeTimer);
+		// logger.info("Before Timer is: " + beforeTimer);
 
 		ExecutorService threadPool = Executors.newFixedThreadPool(50);
 		MyRunnable cmdRunnable = null;
@@ -59,7 +97,7 @@ public final class BootStrap {
 			e.printStackTrace();
 		}
 		Long afterTimer = System.currentTimeMillis();
-		//logger.info("After Timer is: " + afterTimer);
+		// logger.info("After Timer is: " + afterTimer);
 		logger.info("Total Time eclapse is " + (afterTimer - beforeTimer) / 1000 + " seconds");
 	}
 }

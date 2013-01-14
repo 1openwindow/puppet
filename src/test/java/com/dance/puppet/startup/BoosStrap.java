@@ -14,7 +14,7 @@ import com.dance.puppet.processor.MyRunnable;
 import com.dance.puppet.util.FileHelper;
 
 public class BoosStrap {
-	static Logger	logger	= Logger.getLogger(BootStrap.class);
+	static Logger	logger	= Logger.getLogger(Bootstrap.class);
 
 	public static void main(String[] args) {
 		//Load log4j Properties
