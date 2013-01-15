@@ -29,6 +29,10 @@ fi
 #Process Check End
 
 #Argument Validation Start
+if [[ $# -gt 8 ]]
+	echo "Argument Size Too Long"
+fi
+
 for arg in $@
 do
 	case "$arg" in
@@ -71,5 +75,10 @@ if [[ "$script_flag" -ne 1 ]]; then
 fi
 #Argument Validation End
 
-java -jar puppet.jar $1 $2 $3 $4
 
+if [[ -f $PUPPET_HOME/target/puppet-aplha_0.1.jar ]]
+then
+	java -jar $PUPPET_HOME/target/puppet-aplha_0.1.jar $@
+else
+	echo "Jar File Not Found"	
+fi

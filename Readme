@@ -1,3 +1,7 @@
 In Distriputing Enviroment, parallel execute script on mulit-servers at the same time.
 
 在分布式环境中，对多台服务器并行进行各类脚本命令操作
+
+How to Use
+1 set puppet_home 
+2 puppet.sh -u puppet -p puppet -s server/server.list -c test.sh
