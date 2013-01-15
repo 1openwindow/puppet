@@ -5,7 +5,7 @@
 # -c command or script
 
 #Help Document Start
-if [[ "$1" -eq "--help ]]; then
+if [[ "$1" -eq "--help" ]]; then
 	echo "======================================================================="
 	echo ""
 	echo "puppet -u username -p password -s server_list -c script_text"
@@ -29,7 +29,7 @@ fi
 #Process Check End
 
 #Argument Validation Start
-if [[ $# -gt 8 ]]
+if [[ $# -gt 8 ]]; then
 	echo "Argument Size Too Long"
 fi
 
@@ -78,7 +78,9 @@ fi
 
 if [[ -f $PUPPET_HOME/target/puppet-aplha_0.1.jar ]]
 then
-	java -jar $PUPPET_HOME/target/puppet-aplha_0.1.jar $@
+	echo "locating jar file"
+	#java -jar $PUPPET_HOME/target/puppet-aplha_0.1.jar $@
+	java -jar target/puppet-aplha_0.1-jar-with-dependencies.jar $@
 else
-	echo "Jar File Not Found"	
+	echo "Jar File Not Found"
 fi
