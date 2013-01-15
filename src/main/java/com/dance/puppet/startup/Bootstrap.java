@@ -20,21 +20,49 @@ import com.dance.puppet.util.FileHelper;
  */
 public final class Bootstrap {
 
-	static Logger	logger	= Logger.getLogger(Bootstrap.class);
+	static Logger							logger			= Logger.getLogger(Bootstrap.class);
+
+	private String						username;
+	private String						password;
+	// private String serverPath;
+	// private String scriptPath;
+	private String						onelineCommand;
+	private ArrayList<String>	serverList	= new ArrayList<String>();
 
 	public Bootstrap() {
-		loadConfig();
+		// loadConfig();
 		parseScript();
 		sendCommond();
 		startReceiever();
 		displayResult();
 	}
 
-	public void init(){
-		
+	public void init() {
+
 	}
-	
-	public Bootstrap loadConfig() {
+
+	public Bootstrap loadConfig(String username, String password, String serverPath, String scriptPath) {
+		logger.info("========================================");
+		logger.info("Start Loading Config");
+		logger.info("========================================");
+
+		this.username = username;
+		this.password = password;
+		// this.serverPath = serverPath;
+		// this.scriptPath = scriptPath;
+		this.serverList = FileHelper.fileToList("server/"+serverPath);
+		this.onelineCommand = FileHelper.bashToOneLine("script/"+scriptPath);
+
+		logger.info("username => " + username);
+		logger.info("password => ********");
+		logger.info("server.list path => $PUPPET_HOME/server/" + serverPath);
+		logger.info("script file path => $PUPPET_HOME/script/" + scriptPath);
+
+		logger.info("========================================");
+		logger.info("Loading Config Successfully");
+		logger.info("========================================");
+		logger.info("");
+		logger.info("");
 		return this;
 	}
 
@@ -43,6 +71,35 @@ public final class Bootstrap {
 	}
 
 	public Bootstrap sendCommond() {
+		logger.info("========================================");
+		logger.info("Execute Command on Remote Servers");
+		logger.info("========================================");
+		logger.info("execute the following commond => " + this.onelineCommand);
+
+		String cmd = "";
+		Long beforeTimer = System.currentTimeMillis();
+
+		ExecutorService threadPool = Executors.newFixedThreadPool(50);
+		MyRunnable cmdRunnable = null;
+		for (String host : this.serverList) {
+			cmd = this.onelineCommand;
+			cmdRunnable = new MyRunnable(this.username, this.password, host, cmd);
+			threadPool.submit(cmdRunnable);
+		}
+		threadPool.shutdown();
+		try {
+			threadPool.awaitTermination(600, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		Long afterTimer = System.currentTimeMillis();
+		
+		logger.info("Total Time eclapse is " + (afterTimer - beforeTimer) / 1000 + " seconds");
+		logger.info("========================================");
+		logger.info("Execute Command on Remote Servers Successfully");
+		logger.info("========================================");
+		logger.info("");
+		logger.info("");
 		return this;
 	}
 
@@ -54,50 +111,4 @@ public final class Bootstrap {
 		return this;
 	}
 
-	public static void main(String[] args) {
-		// Load Config Properties
-
-		// Parse Script
-
-		// Run Engine
-
-		// Load log4j Properties
-		PropertyConfigurator.configure("properties/log4j.properties");
-
-		ArrayList<String> list = FileHelper.fileToList("server/server.list");
-		String onelineCommond = FileHelper.bashToOneLine("script/test.sh");
-		logger.info("execute the following commond");
-		logger.info(onelineCommond);
-		String user = null;
-		String password = null;
-		Properties prop = new Properties();
-		try {
-			prop.load(new FileInputStream("properties/config.properties"));
-			user = prop.getProperty("USERNAME");
-			password = prop.getProperty("PASSWORD");
-		} catch (Exception e) {
-			System.out.println();
-		}
-
-		String cmd = "";
-		Long beforeTimer = System.currentTimeMillis();
-		// logger.info("Before Timer is: " + beforeTimer);
-
-		ExecutorService threadPool = Executors.newFixedThreadPool(50);
-		MyRunnable cmdRunnable = null;
-		for (String host : list) {
-			cmd = onelineCommond;
-			cmdRunnable = new MyRunnable(user, password, host, cmd);
-			threadPool.submit(cmdRunnable);
-		}
-		threadPool.shutdown();
-		try {
-			threadPool.awaitTermination(600, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		Long afterTimer = System.currentTimeMillis();
-		// logger.info("After Timer is: " + afterTimer);
-		logger.info("Total Time eclapse is " + (afterTimer - beforeTimer) / 1000 + " seconds");
-	}
 }

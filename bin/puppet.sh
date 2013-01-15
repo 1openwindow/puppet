@@ -78,9 +78,10 @@ fi
 
 if [[ -f $PUPPET_HOME/target/puppet-aplha_0.1.jar ]]
 then
-	echo "locating jar file"
 	#java -jar $PUPPET_HOME/target/puppet-aplha_0.1.jar $@
+	echo "jar file found"
 	java -jar target/puppet-aplha_0.1-jar-with-dependencies.jar $@
+	#java -jar target/puppet-aplha_0.1.jar $@
 else
 	echo "Jar File Not Found"
 fi
