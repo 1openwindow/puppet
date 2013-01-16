@@ -10,3 +10,5 @@ How to Use
 2 mvn clean package 
 3 under $PUPPET_HOME
 	run "bin/puppet.sh -u puppet -p puppet -s server.list -c test.sh"
+4 to see help document
+	run "bin/puppet.sh --help" 
