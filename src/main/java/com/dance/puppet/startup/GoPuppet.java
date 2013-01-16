@@ -7,8 +7,8 @@ import com.dance.puppet.util.MainArgsParser;
 
 public class GoPuppet {
 
-	static Logger							logger			= Logger.getLogger(GoPuppet.class);
-	
+	static Logger	logger	= Logger.getLogger(GoPuppet.class);
+
 	public static void main(String[] args) {
 		// Load log4j Properties
 		PropertyConfigurator.configure("properties/log4j.properties");
@@ -17,10 +17,11 @@ public class GoPuppet {
 		logger.info("==================================");
 		logger.info("");
 
-		logger.info("Parse Main Args");
-		Map<String,String> mainArgs = MainArgsParser.parse(args);
+		logger.info("Parse Main Args...");
+		Map<String, String> mainArgs = MainArgsParser.parse(args);
 		Bootstrap bootStrap = new Bootstrap();
-		bootStrap.loadConfig(mainArgs.get("-u"), mainArgs.get("-p"), mainArgs.get("-s"), mainArgs.get("-c")).sendCommond();
-		//bootStrap.loadConfig("puppet","puppet","server.list","test.sh").sendCommond();
+		bootStrap.loadConfig(mainArgs.get("-u"), mainArgs.get("-p"), mainArgs.get("-s"), mainArgs.get("-c"))
+				.parseServer().parseScript().sendCommond();
+		// bootStrap.loadConfig("puppet","puppet","server.list","test.sh").sendCommond();
 	}
 }

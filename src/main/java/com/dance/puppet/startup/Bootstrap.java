@@ -10,10 +10,14 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.dance.puppet.conf.Config;
+import com.dance.puppet.parser.ScriptParser;
+import com.dance.puppet.parser.ServerParser;
 import com.dance.puppet.processor.MyRunnable;
 import com.dance.puppet.util.FileHelper;
 
 /**
+ * Method Chaining Pattern Use to Start Puppet
  * 
  * @author Chan Chen
  * 
@@ -22,23 +26,19 @@ public final class Bootstrap {
 
 	static Logger							logger			= Logger.getLogger(Bootstrap.class);
 
-	private String						username;
-	private String						password;
-	// private String serverPath;
-	// private String scriptPath;
 	private String						onelineCommand;
 	private ArrayList<String>	serverList	= new ArrayList<String>();
 
 	public Bootstrap() {
 		// loadConfig();
-		parseScript();
-		sendCommond();
-		startReceiever();
-		displayResult();
+		// parseServer();
+		// parseScript();
+		// sendCommond();
+		// startReceiever();
+		// displayResult();
 	}
 
-	public void init() {
-
+	public void start() {
 	}
 
 	public Bootstrap loadConfig(String username, String password, String serverPath, String scriptPath) {
@@ -46,12 +46,10 @@ public final class Bootstrap {
 		logger.info("Start Loading Config");
 		logger.info("========================================");
 
-		this.username = username;
-		this.password = password;
-		// this.serverPath = serverPath;
-		// this.scriptPath = scriptPath;
-		this.serverList = FileHelper.fileToList("server/"+serverPath);
-		this.onelineCommand = FileHelper.bashToOneLine("script/"+scriptPath);
+		Config.getInstance().setUserName(username);
+		Config.getInstance().setPassword(password);
+		Config.getInstance().setServerPath(serverPath);
+		Config.getInstance().setScriptPath(scriptPath);
 
 		logger.info("username => " + username);
 		logger.info("password => ********");
@@ -66,7 +64,33 @@ public final class Bootstrap {
 		return this;
 	}
 
+	public Bootstrap parseServer() {
+		logger.info("========================================");
+		logger.info("Start Parse Sever List");
+		logger.info("========================================");
+		logger.info("");
+		logger.info("");
+		this.serverList = ServerParser.parseServer();
+		logger.info("========================================");
+		logger.info("Parse Server List Successfully");
+		logger.info("========================================");
+		logger.info("");
+		logger.info("");
+		return this;
+	}
+
 	public Bootstrap parseScript() {
+		logger.info("========================================");
+		logger.info("Start Parse Script File");
+		logger.info("========================================");
+		logger.info("");
+		logger.info("");
+		this.onelineCommand = ScriptParser.parseScript();
+		logger.info("========================================");
+		logger.info("Parse Script File Successfully");
+		logger.info("========================================");
+		logger.info("");
+		logger.info("");
 		return this;
 	}
 
@@ -83,7 +107,8 @@ public final class Bootstrap {
 		MyRunnable cmdRunnable = null;
 		for (String host : this.serverList) {
 			cmd = this.onelineCommand;
-			cmdRunnable = new MyRunnable(this.username, this.password, host, cmd);
+			cmdRunnable = new MyRunnable(Config.getInstance().getUserName(), Config.getInstance().getPassword(),
+					host, cmd);
 			threadPool.submit(cmdRunnable);
 		}
 		threadPool.shutdown();
@@ -93,7 +118,7 @@ public final class Bootstrap {
 			e.printStackTrace();
 		}
 		Long afterTimer = System.currentTimeMillis();
-		
+
 		logger.info("Total Time eclapse is " + (afterTimer - beforeTimer) / 1000 + " seconds");
 		logger.info("========================================");
 		logger.info("Execute Command on Remote Servers Successfully");

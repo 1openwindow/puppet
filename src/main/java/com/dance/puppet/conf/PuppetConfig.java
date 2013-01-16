@@ -7,19 +7,20 @@ import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
+ * Not use so far
+ * 
  * AppConfig - a drop-in replacement for System.getProperty() calls. The
  * application will need to suitably initialize the underlying properties for
  * this class.
  * 
  * @author Chan Chen
- *
+ * 
  */
 public class PuppetConfig {
-	private static final Logger			logger							= Logger.getLogger(PuppetConfig.class.getName());
-
+	private static final Logger				logger		= Logger.getLogger(PuppetConfig.class.getName());
 
 	// singleton instance
-	private static final PuppetConfig	instance						= new PuppetConfig();
+	private static final PuppetConfig	instance	= new PuppetConfig();
 
 	public static PuppetConfig getInstance() {
 		return instance;
