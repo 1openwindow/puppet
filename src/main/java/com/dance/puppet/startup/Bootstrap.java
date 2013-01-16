@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.dance.puppet.conf.Config;
+import com.dance.puppet.parser.ParserReader;
 import com.dance.puppet.parser.ScriptParser;
 import com.dance.puppet.parser.ServerParser;
 import com.dance.puppet.processor.MyRunnable;
@@ -100,13 +101,13 @@ public final class Bootstrap {
 		logger.info("========================================");
 		logger.info("execute the following commond => " + this.onelineCommand);
 
-		String cmd = "";
+
 		Long beforeTimer = System.currentTimeMillis();
 
+		String cmd = ParserReader.readOneLineCommand();
 		ExecutorService threadPool = Executors.newFixedThreadPool(50);
 		MyRunnable cmdRunnable = null;
-		for (String host : this.serverList) {
-			cmd = this.onelineCommand;
+		for (String host : ParserReader.readServerList()) {
 			cmdRunnable = new MyRunnable(Config.getInstance().getUserName(), Config.getInstance().getPassword(),
 					host, cmd);
 			threadPool.submit(cmdRunnable);
