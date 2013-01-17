@@ -1,6 +1,8 @@
 package com.dance.puppet.request;
 
 /**
+ * Chain of Responsibility Pattern
+ * ScriptRequest Object
  * 
  * @author Chan Chen
  *

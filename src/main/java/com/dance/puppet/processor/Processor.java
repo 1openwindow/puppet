@@ -11,25 +11,24 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import com.jcraft.jsch.UserInfo;
 
 /**
  * 
  * @author Chan Chen
- *
+ * 
  */
 public class Processor {
 
-	static Logger logger = Logger.getLogger(Processor.class.getName());
-	
+	static Logger	logger	= Logger.getLogger(Processor.class.getName());
+
 	public static void execute(String user, String password, String server, String cmd) {
 		try {
 			JSch jsch = new JSch();
 			Session session = jsch.getSession(user, server, 22);
 			session.setConfig("StrictHostKeyChecking", "no");
 			session.setPassword(password);
-			//set connection time out to 10000ms
-			//session.connect();
+			// set connection time out to 10000ms
+			// session.connect();
 			session.connect(10000);
 			Channel channel = session.openChannel("exec");
 			((ChannelExec) channel).setCommand(cmd);

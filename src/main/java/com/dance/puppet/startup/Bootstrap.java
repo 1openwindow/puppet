@@ -30,15 +30,6 @@ public final class Bootstrap {
 	private String						onelineCommand;
 	private ArrayList<String>	serverList	= new ArrayList<String>();
 
-	public Bootstrap() {
-		// loadConfig();
-		// parseServer();
-		// parseScript();
-		// sendCommond();
-		// startReceiever();
-		// displayResult();
-	}
-
 	public void start() {
 	}
 
@@ -105,7 +96,7 @@ public final class Bootstrap {
 		Long beforeTimer = System.currentTimeMillis();
 
 		String cmd = ParserReader.readOneLineCommand();
-		ExecutorService threadPool = Executors.newFixedThreadPool(50);
+		ExecutorService threadPool = Executors.newFixedThreadPool(10);
 		MyRunnable cmdRunnable = null;
 		for (String host : ParserReader.readServerList()) {
 			cmdRunnable = new MyRunnable(Config.getInstance().getUserName(), Config.getInstance().getPassword(),

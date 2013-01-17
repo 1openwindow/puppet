@@ -3,10 +3,17 @@ package com.dance.puppet.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 public class MainArgsParser {
 
+	static Logger	logger	= Logger.getLogger(MainArgsParser.class);
+
 	public static Map parse(String[] args) {
-		Map<String,String> result = new HashMap<String,String>();
+		if (args == null) {
+			logger.error("Main Args is Null");
+		}
+		Map<String, String> result = new HashMap<String, String>();
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].equalsIgnoreCase("-u")) {
 				result.put("-u", args[i + 1]);

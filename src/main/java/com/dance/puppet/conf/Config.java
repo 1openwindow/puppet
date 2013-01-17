@@ -10,15 +10,12 @@ import java.util.ArrayList;
  */
 public final class Config {
 
-	private static String							userName;
-	private static String							password;
-	private static String							serverPath;
-	private static String							scriptPath;
-
-	private static ArrayList<String>	serverList;
-	private static String							onelineScript;
-
-	private volatile static Config		instance;
+	private static String						userName;
+	private static String						password;
+	private static String						serverPath;
+	private static String						scriptPath;
+	private static String						threadCount;
+	private volatile static Config	instance;
 
 	private Config() {
 	}
@@ -66,20 +63,12 @@ public final class Config {
 		Config.scriptPath = scriptPath;
 	}
 
-	public static ArrayList<String> getServerList() {
-		return serverList;
+	public static String getThreadCount() {
+		return threadCount;
 	}
 
-	public static void setServerList(ArrayList<String> serverList) {
-		Config.serverList = serverList;
-	}
-
-	public static String getOnelineScript() {
-		return onelineScript;
-	}
-
-	public static void setOnelineScript(String onelineScript) {
-		Config.onelineScript = onelineScript;
+	public static void setThreadCount(String threadCount) {
+		Config.threadCount = threadCount;
 	}
 
 }
