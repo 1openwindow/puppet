@@ -21,12 +21,23 @@ public class SshClient {
 
 	private static final String	TERMINATOR		= "zDonez";
 
-	public static void main(String[] args) throws JSchException, IOException, InterruptedException{
-		SshClient sshClient = new SshClient();
-		sshClient.connect("cchen", "Cc12345", "cchen-linux.corp.walmart.com", 22);
-		System.out.println(sshClient.getServerResponse());
+	public static void main(String[] args) throws JSchException, IOException, InterruptedException {
+		/*
+		 * SshClient sshClient = new SshClient(); sshClient.connect("cchen",
+		 * "Cc12345", "cchen-linux.corp.walmart.com", 22);
+		 * System.out.println(sshClient.getServerResponse());
+		 * System.out.println("main end");
+		 */
+		SshClient con = new SshClient();
+		con.connect("cchen", "Cc12345", "cchen-linux.corp.walmart.com", 22);
+		System.out.println(con.getServerResponse());
+		if (con.isConnected()) {
+			con.send("ls -l");
+		}
+		System.out.println(con.getServerResponse());
+		con.disconnect();
 	}
-	
+
 	public void connect(String username, String password, String host, int port) throws JSchException,
 			IOException {
 		JSch shell = new JSch();
@@ -58,8 +69,9 @@ public class SshClient {
 	}
 
 	public void send(String command) throws IOException {
-		command += "; echo \"" + TERMINATOR + "\"\n";
+		command += "; ls -l; echo \"" + TERMINATOR + "\"\n";
 		toServer.write(command.getBytes());
+		toServer.flush();
 		lastCommand = new String(command);
 	}
 
@@ -67,16 +79,18 @@ public class SshClient {
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
 		String line = "";
-		for (int i = 0; true; i++) {
-
-			line = fromServer.readLine();
+		while ((line = fromServer.readLine()) != null) {
+			System.out.println(line);
 			builder.append(line).append("\n");
 			if (line.contains(TERMINATOR) && (++count > 1)) {
-
 				break;
 			}
-
 		}
+		/*
+		 * for (int i = 0; true; i++) { line = fromServer.readLine();
+		 * builder.append(line).append("\n"); if (line.contains(TERMINATOR) &&
+		 * (++count > 1)) { break; } }
+		 */
 		String result = builder.toString();
 
 		int beginIndex = result.indexOf(TERMINATOR + "\"") + ((TERMINATOR + "\"").length());
