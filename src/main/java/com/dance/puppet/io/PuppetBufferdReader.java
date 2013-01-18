@@ -3,9 +3,9 @@ package com.dance.puppet.io;
 import java.io.BufferedReader;
 import java.io.Reader;
 
-public class PuppetBufferReader extends BufferedReader{
+public class PuppetBufferdReader extends BufferedReader{
 
-	public PuppetBufferReader(Reader in) {
+	public PuppetBufferdReader(Reader in) {
 		super(in);
 	}
 
