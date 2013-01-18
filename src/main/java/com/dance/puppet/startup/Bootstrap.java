@@ -95,7 +95,7 @@ public final class Bootstrap {
 
 		Long beforeTimer = System.currentTimeMillis();
 
-		String cmd = ParserReader.readOneLineCommand();
+/*		String cmd = ParserReader.readOneLineCommand();
 		ExecutorService threadPool = Executors.newFixedThreadPool(10);
 		MyRunnable cmdRunnable = null;
 		for (String host : ParserReader.readServerList()) {
@@ -108,7 +108,7 @@ public final class Bootstrap {
 			threadPool.awaitTermination(600, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 		Long afterTimer = System.currentTimeMillis();
 
 		logger.info("Total Time eclapse is " + (afterTimer - beforeTimer) / 1000 + " seconds");
