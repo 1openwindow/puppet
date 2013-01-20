@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.dance.puppet.processor.MyRunnable;
 import com.dance.puppet.util.FileHelper;
 
 public class BoosStrap {
@@ -40,13 +39,11 @@ public class BoosStrap {
 		logger.info("Before Timer is: " + beforeTimer);
 
 		ExecutorService threadPool = Executors.newFixedThreadPool(50);
-		MyRunnable cmdRunnable = null;
-		for (String host : list) {
+/*		for (String host : list) {
 			cmd = onelineCommond;
-			cmdRunnable = new MyRunnable(user, password, host, cmd);
 			threadPool.submit(cmdRunnable);
 		}
-		threadPool.shutdown();
+		threadPool.shutdown();*/
 		try {
 			threadPool.awaitTermination(600, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
