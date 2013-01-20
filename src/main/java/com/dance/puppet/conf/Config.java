@@ -10,12 +10,13 @@ import java.util.ArrayList;
  */
 public final class Config {
 
-	private static String						userName;
-	private static String						password;
-	private static String						serverPath;
-	private static String						scriptPath;
-	private static String						threadCount;
-	private volatile static Config	instance;
+	private static String userName;
+	private static String password;
+	private static String serverPath;
+	private static String scriptPath;
+	private static String threadCount;
+	private static String port;
+	private volatile static Config instance;
 
 	private Config() {
 	}
@@ -69,6 +70,14 @@ public final class Config {
 
 	public static void setThreadCount(String threadCount) {
 		Config.threadCount = threadCount;
+	}
+
+	public static String getPort() {
+		return port;
+	}
+
+	public static void setPort(String port) {
+		Config.port = port;
 	}
 
 }
