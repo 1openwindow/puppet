@@ -77,7 +77,9 @@ public class Processor implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		
+		logger.info("try to disconnect...");
+		disconnect();
+		logger.info("disconnect successfully");
 	}
 
 	public void connect(String username, String password, String host, int port) throws JSchException,
