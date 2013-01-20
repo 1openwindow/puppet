@@ -5,25 +5,22 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.dance.puppet.conf.Config;
-import com.dance.puppet.parser.ParserReader;
-import com.dance.puppet.parser.ScriptParser;
-import com.dance.puppet.parser.ServerParser;
-import com.jcraft.jsch.Logger;
 
 public class Engine {
 
 	public static void fire() {
 		ExecutorService processorPool = Executors.newFixedThreadPool(10);
-		Processor processor = new ProcessorFactory().createProcessor();
-
+		
+		ProcessorFactory processorFactory = new ProcessorFactory();
 		Config config = Config.getInstance();
-		String command = Config.getInstance().getCommand();
-		ArrayList<String> serverList = Config.getInstance().getServerList();
+		ArrayList<String> serverList = config.getServerList();
 		for (String host : serverList) {
+			//IProcessor processor = ProcessorFactory.createProcessor(config.getCommand().type());
+			IProcessor processor = processorFactory.createProcessor("NORMAL");
 			processor.setUsername(config.getUserName());
 			processor.setPassword(config.getPassword());
 			processor.setHost(host);
-			processor.setCommand(command);
+			processor.setCommand(config.getCommand());
 			processor.setPort(config.getPort());
 			processorPool.submit(processor);
 		}

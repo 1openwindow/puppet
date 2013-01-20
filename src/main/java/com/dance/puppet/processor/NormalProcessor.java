@@ -7,10 +7,7 @@ import java.io.OutputStream;
 
 import org.apache.log4j.Logger;
 
-import com.dance.puppet.conf.Config;
 import com.dance.puppet.io.PuppetBufferdReader;
-import com.dance.puppet.io.PuppetInputStream;
-import com.dance.puppet.io.PuppetOutputStream;
 import com.dance.puppet.util.TextFormatUtil;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
@@ -18,68 +15,53 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 /**
- * Processor Class is the connect pool in puppet, seting up InputStram,
- * OouputStream, Connection and Disconnection
+ * Processor Class is the central of request and response in puppet, seting up
+ * InputStram, OouputStream, Connection and Disconnection
  * 
  * @author Chan Chen
  * 
  */
-public class Processor implements Runnable {
+public class NormalProcessor extends IProcessor {
 
-	static Logger logger = Logger.getLogger(Processor.class.getName());
+	static Logger								logger			= Logger.getLogger(NormalProcessor.class.getName());
 
-	String username;
-	String password;
-	String command;
-	String host;
-	String port;
+	private String							username;
+	private String							password;
+	private String							command;
+	private String							host;
+	private String							port;
 
-	InputStream fromServer;
-	OutputStream toServer;
-	String lastCommand = "";
-	Channel channel;
-	private static final String TERMINATOR = "puppet";
+	private InputStream					fromServer;
+	private OutputStream				toServer;
+	private String							lastCommand	= "";
+	private Channel							channel;
+
+	private static final String	TERMINATOR	= "puppet";
 
 	public void run() {
 		// connect to server
 		try {
 			connect(this.getUsername(), this.getPassword(), this.host, Integer.parseInt(this.port));
+			logger.info(fetchResponse());
+
+			if (isConnected()) {
+				logger.info(getCommand());
+				sendCommand(getCommand());
+				logger.info(fetchResponse());
+			}
+
+			logger.info("try to disconnect...");
+			disconnect();
+			logger.info("disconnect successfully");
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSchException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		try {
-			logger.info(getServerResponse());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		// send command to remote server
-		if (isConnected()) {
-			try {
-				logger.info(getCommand());
-				send(getCommand());
-				logger.info(getServerResponse());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		logger.info("try to disconnect...");
-		disconnect();
-		logger.info("disconnect successfully");
 	}
 
 	public void connect(String username, String password, String host, int port) throws JSchException,
@@ -95,8 +77,7 @@ public class Processor implements Runnable {
 
 		channel.connect();
 		if (isConnected()) {
-			// send("echo \"\"");
-			send("echo \"connect to $HOSTNAME suceessfully \"");
+			sendCommand("echo \"connect to $HOSTNAME suceessfully \"");
 		}
 	}
 
@@ -110,14 +91,14 @@ public class Processor implements Runnable {
 		}
 	}
 
-	public void send(String command) throws IOException {
+	public void sendCommand(String command) throws IOException {
 		command += " echo \"" + TERMINATOR + "\"\n";
 		toServer.write(command.getBytes());
 		toServer.flush();
 		lastCommand = new String(command);
 	}
 
-	public String getServerResponse() throws IOException, InterruptedException {
+	public String fetchResponse() throws IOException, InterruptedException {
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
 		String line = "";

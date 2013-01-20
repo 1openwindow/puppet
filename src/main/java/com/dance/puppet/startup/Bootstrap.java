@@ -52,8 +52,7 @@ public final class Bootstrap {
 		logger.info("Start Parse Sever List");
 		logger.info("========================================");
 		logger.info("");
-		this.serverList = ServerParser.parseServer();
-		Config.getInstance().setServerList(serverList);
+		Config.getInstance().setServerList(ServerParser.parseServer());
 		logger.info("");
 		logger.info("========================================");
 		logger.info("Parse Server List Successfully");
@@ -68,10 +67,8 @@ public final class Bootstrap {
 		logger.info("Start Parse Script File");
 		logger.info("========================================");
 		logger.info("");
+		Config.getInstance().setCommand(ScriptParser.parseScript());
 		logger.info("");
-		this.onelineCommand = ScriptParser.parseScript();
-		Config.getInstance().setCommand(onelineCommand);
-		logger.info(this.onelineCommand);
 		logger.info("========================================");
 		logger.info("Parse Script File Successfully");
 		logger.info("========================================");
@@ -80,7 +77,7 @@ public final class Bootstrap {
 		return this;
 	}
 
-	public Bootstrap sendCommond() {
+	public Bootstrap fireEngine() {
 		logger.info("========================================");
 		logger.info("Execute Command on Remote Servers");
 		logger.info("========================================");
