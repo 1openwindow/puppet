@@ -7,7 +7,7 @@ package com.dance.puppet.request;
  * @author Chan Chen
  *
  */
-public interface IRequest {
+public interface Arrow {
 
 	int getLineNumber();
 

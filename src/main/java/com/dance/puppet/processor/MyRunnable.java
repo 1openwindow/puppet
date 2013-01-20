@@ -23,6 +23,6 @@ public class MyRunnable implements Runnable {
 	}
 
 	public void run() {
-		Processor.execute(user, password, server, cmd);
+		//Processor.execute(user, password, server, cmd);
 	}
 }

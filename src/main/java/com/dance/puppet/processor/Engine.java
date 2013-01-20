@@ -20,22 +20,8 @@ public class Engine {
 			processor.setPassword(config.getPassword());
 			processor.setHost(host);
 			processor.setCommand(command);
+			processor.setPort(config.getPort());
 			processorPool.submit(processor);
 		}
 	}
-	
-/*		String cmd = ParserReader.readOneLineCommand();
-		ExecutorService threadPool = Executors.newFixedThreadPool(10);
-		MyRunnable cmdRunnable = null;
-		for (String host : ParserReader.readServerList()) {
-			cmdRunnable = new MyRunnable(Config.getInstance().getUserName(), Config.getInstance().getPassword(),
-					host, cmd);
-			threadPool.submit(cmdRunnable);
-		}
-		threadPool.shutdown();
-		try {
-			threadPool.awaitTermination(600, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-	}*/
 }

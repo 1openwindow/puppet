@@ -27,50 +27,45 @@ import com.jcraft.jsch.Session;
  * @author Chan Chen
  * 
  */
-public class Processor {
+public class Processor implements Runnable {
 
-	static Logger								logger			= Logger.getLogger(Processor.class.getName());
+	static Logger logger = Logger.getLogger(Processor.class.getName());
 
-	PuppetInputStream						fromServer;
-	PuppetOutputStream					toServer;
-	String											lastCommand	= "";
-	Channel											channel;
-	private static final String	TERMINATOR	= "puppet";
+	String username;
+	String password;
+	String command;
+	String host;
+	String port;
 
-	public static void execute(String user, String password, String server, String cmd) {
+	PuppetInputStream fromServer;
+	PuppetOutputStream toServer;
+	String lastCommand = "";
+	Channel channel;
+	private static final String TERMINATOR = "puppet";
+
+	public void run() {
+		// connect to server
 		try {
-			JSch jsch = new JSch();
-			Session session = jsch.getSession(user, server, 22);
-			session.setConfig("StrictHostKeyChecking", "no");
-			session.setPassword(password);
-			// set connection time out to 10000ms
-			// session.connect();
-			session.connect(10000);
-			Channel channel = session.openChannel("exec");
-			((ChannelExec) channel).setCommand(cmd);
-			channel.setInputStream(null);
-			((ChannelExec) channel).setErrStream(System.err);
-			InputStream in = channel.getInputStream();
-			channel.connect();
-			synchronized (ExecutorService.class) {
-				byte[] tmp = new byte[1024];
-				while (true) {
-					while (in.available() > 0) {
-						int i = in.read(tmp, 0, 1024);
-						if (i < 0)
-							break;
-						logger.info(new String(tmp, 0, i));
-					}
-					if (channel.isClosed()) {
-						logger.info("exit-status: " + channel.getExitStatus());
-						break;
-					}
-				}
+			connect(this.getUsername(), this.getPassword(), this.host, Integer.parseInt(this.port));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// send command to remote server
+		if (isConnected()) {
+			try {
+				send(this.command);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			channel.disconnect();
-			session.disconnect();
-		} catch (Exception e) {
-			System.out.println(e);
 		}
 	}
 
@@ -87,7 +82,8 @@ public class Processor {
 
 		channel.connect();
 		if (isConnected()) {
-			send("echo \"\"");
+			// send("echo \"\"");
+			send("echo \"connect to $HOST_NAME suceessfully \"");
 		}
 	}
 
@@ -124,4 +120,45 @@ public class Processor {
 		result = result.substring(beginIndex);
 		return result.replaceAll(TextFormatUtil.escape(TERMINATOR), "").trim();
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getCommand() {
+		return command;
+	}
+
+	public void setCommand(String command) {
+		this.command = command;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
+	}
+
 }

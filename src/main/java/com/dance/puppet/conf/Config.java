@@ -15,7 +15,7 @@ public final class Config {
 	private static String serverPath;
 	private static String scriptPath;
 	private static String threadCount;
-	private static String port;
+	private static String port = "22";
 	private volatile static Config instance;
 
 	private Config() {
@@ -74,10 +74,6 @@ public final class Config {
 
 	public static String getPort() {
 		return port;
-	}
-
-	public static void setPort(String port) {
-		Config.port = port;
 	}
 
 }

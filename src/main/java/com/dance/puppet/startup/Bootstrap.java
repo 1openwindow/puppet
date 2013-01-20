@@ -1,21 +1,12 @@
 package com.dance.puppet.startup;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import com.dance.puppet.conf.Config;
-import com.dance.puppet.parser.ParserReader;
 import com.dance.puppet.parser.ScriptParser;
 import com.dance.puppet.parser.ServerParser;
-import com.dance.puppet.processor.MyRunnable;
-import com.dance.puppet.util.FileHelper;
+import com.dance.puppet.processor.Engine;
 
 /**
  * Method Chaining Pattern Use to Start Puppet
@@ -95,6 +86,7 @@ public final class Bootstrap {
 
 		Long beforeTimer = System.currentTimeMillis();
 
+		Engine.fire();
 /*		String cmd = ParserReader.readOneLineCommand();
 		ExecutorService threadPool = Executors.newFixedThreadPool(10);
 		MyRunnable cmdRunnable = null;
