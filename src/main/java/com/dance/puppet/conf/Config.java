@@ -10,13 +10,16 @@ import java.util.ArrayList;
  */
 public final class Config {
 
-	private static String userName;
-	private static String password;
-	private static String serverPath;
-	private static String scriptPath;
-	private static String threadCount;
-	private static String port = "22";
-	private volatile static Config instance;
+	private static String							userName;
+	private static String							password;
+	private static String							serverPath;
+	private static String							scriptPath;
+	private static String							threadCount;
+	private static String							port	= "22";
+
+	private static ArrayList<String>	serverList;
+	private static String							command;
+	private volatile static Config		instance;
 
 	private Config() {
 	}
@@ -74,6 +77,22 @@ public final class Config {
 
 	public static String getPort() {
 		return port;
+	}
+
+	public static ArrayList<String> getServerList() {
+		return serverList;
+	}
+
+	public static void setServerList(ArrayList<String> serverList) {
+		Config.serverList = serverList;
+	}
+
+	public static String getCommand() {
+		return command;
+	}
+
+	public static void setCommand(String command) {
+		Config.command = command;
 	}
 
 }

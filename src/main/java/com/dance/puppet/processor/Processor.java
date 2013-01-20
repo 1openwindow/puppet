@@ -1,21 +1,18 @@
 package com.dance.puppet.processor;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.util.concurrent.ExecutorService;
-import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import com.dance.puppet.conf.Config;
 import com.dance.puppet.io.PuppetBufferdReader;
 import com.dance.puppet.io.PuppetInputStream;
 import com.dance.puppet.io.PuppetOutputStream;
 import com.dance.puppet.util.TextFormatUtil;
 import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
@@ -37,8 +34,8 @@ public class Processor implements Runnable {
 	String host;
 	String port;
 
-	PuppetInputStream fromServer;
-	PuppetOutputStream toServer;
+	InputStream fromServer;
+	OutputStream toServer;
 	String lastCommand = "";
 	Channel channel;
 	private static final String TERMINATOR = "puppet";
@@ -57,16 +54,30 @@ public class Processor implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		try {
+			logger.info(getServerResponse());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		// send command to remote server
 		if (isConnected()) {
 			try {
-				send(this.command);
+				logger.info(getCommand());
+				send(getCommand());
+				logger.info(getServerResponse());
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
 	}
 
 	public void connect(String username, String password, String host, int port) throws JSchException,
@@ -77,13 +88,13 @@ public class Processor implements Runnable {
 		session.setPassword(password);
 		session.connect();
 		channel = session.openChannel("shell");
-		fromServer = (PuppetInputStream) channel.getInputStream();
-		toServer = (PuppetOutputStream) channel.getOutputStream();
+		fromServer = channel.getInputStream();
+		toServer = channel.getOutputStream();
 
 		channel.connect();
 		if (isConnected()) {
 			// send("echo \"\"");
-			send("echo \"connect to $HOST_NAME suceessfully \"");
+			send("echo \"connect to $HOSTNAME suceessfully \"");
 		}
 	}
 
@@ -98,7 +109,7 @@ public class Processor implements Runnable {
 	}
 
 	public void send(String command) throws IOException {
-		command += "; echo \"" + TERMINATOR + "\"\n";
+		command += " echo \"" + TERMINATOR + "\"\n";
 		toServer.write(command.getBytes());
 		toServer.flush();
 		lastCommand = new String(command);

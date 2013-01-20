@@ -52,8 +52,9 @@ public final class Bootstrap {
 		logger.info("Start Parse Sever List");
 		logger.info("========================================");
 		logger.info("");
-		logger.info("");
 		this.serverList = ServerParser.parseServer();
+		Config.getInstance().setServerList(serverList);
+		logger.info("");
 		logger.info("========================================");
 		logger.info("Parse Server List Successfully");
 		logger.info("========================================");
@@ -69,6 +70,8 @@ public final class Bootstrap {
 		logger.info("");
 		logger.info("");
 		this.onelineCommand = ScriptParser.parseScript();
+		Config.getInstance().setCommand(onelineCommand);
+		logger.info(this.onelineCommand);
 		logger.info("========================================");
 		logger.info("Parse Script File Successfully");
 		logger.info("========================================");
@@ -83,24 +86,8 @@ public final class Bootstrap {
 		logger.info("========================================");
 		logger.info("execute the following commond => " + this.onelineCommand);
 
-
 		Long beforeTimer = System.currentTimeMillis();
-
 		Engine.fire();
-/*		String cmd = ParserReader.readOneLineCommand();
-		ExecutorService threadPool = Executors.newFixedThreadPool(10);
-		MyRunnable cmdRunnable = null;
-		for (String host : ParserReader.readServerList()) {
-			cmdRunnable = new MyRunnable(Config.getInstance().getUserName(), Config.getInstance().getPassword(),
-					host, cmd);
-			threadPool.submit(cmdRunnable);
-		}
-		threadPool.shutdown();
-		try {
-			threadPool.awaitTermination(600, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
 		Long afterTimer = System.currentTimeMillis();
 
 		logger.info("Total Time eclapse is " + (afterTimer - beforeTimer) / 1000 + " seconds");

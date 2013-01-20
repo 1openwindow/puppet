@@ -8,18 +8,9 @@ import com.dance.puppet.util.FileHelper;
 
 public class ServerParser {
 
-	static Logger				logger	= Logger.getLogger(ServerParser.class);
+	static Logger											logger	= Logger.getLogger(ServerParser.class);
 
-	private ServerList	serverList;
-	private String			serverPath;
-
-	public ArrayList getServerList() {
-		return serverList;
-	}
-
-	public void setServerList(ArrayList serverList) {
-		this.serverList = (ServerList) serverList;
-	}
+	private static String							serverPath;
 
 	public static ArrayList<String> parseServer() {
 		return parseServer(Config.getInstance().getServerPath());
