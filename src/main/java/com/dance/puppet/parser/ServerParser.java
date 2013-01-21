@@ -4,12 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import org.apache.log4j.Logger;
 
 public class ServerParser implements IParser {
 
-	static Logger											logger	= Logger.getLogger(ServerParser.class);
+	static Logger							logger	= Logger.getLogger(ServerParser.class);
 
 	private ArrayList<String>	parserResult;
 

@@ -1,8 +1,6 @@
 package com.dance.puppet.parser;
 
 import java.util.ArrayList;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 /**

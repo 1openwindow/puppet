@@ -4,13 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
-
-import com.dance.puppet.conf.Config;
-import com.dance.puppet.request.ServerList;
-import com.dance.puppet.util.FileHelper;
 
 /**
  * Parse Bash Script Text
