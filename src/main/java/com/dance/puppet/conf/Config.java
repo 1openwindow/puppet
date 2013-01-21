@@ -1,7 +1,5 @@
 package com.dance.puppet.conf;
 
-import java.util.ArrayList;
-
 /**
  * Singleton Pattern Store Puppet Config Argument Singleton Pattern
  * 
@@ -10,16 +8,14 @@ import java.util.ArrayList;
  */
 public final class Config {
 
-	private static String							userName;
-	private static String							password;
-	private static String							serverPath;
-	private static String							scriptPath;
-	private static String							threadCount;
-	private static String							port	= "22";
+	private String									userName;
+	private String									password;
+	private String									serverPath;
+	private String									scriptPath;
+	private String									threadCount;
+	private String									port	= "22";
 
-	private static ArrayList<String>	serverList;
-	private static String							command;
-	private volatile static Config		instance;
+	private volatile static Config	instance;
 
 	private Config() {
 	}
@@ -35,64 +31,48 @@ public final class Config {
 		return instance;
 	}
 
-	public static String getUserName() {
+	public String getUserName() {
 		return userName;
 	}
 
-	public static void setUserName(String userName) {
-		Config.userName = userName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public static String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public static void setPassword(String password) {
-		Config.password = password;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public static String getServerPath() {
+	public String getServerPath() {
 		return serverPath;
 	}
 
-	public static void setServerPath(String serverPath) {
-		Config.serverPath = serverPath;
+	public void setServerPath(String serverPath) {
+		this.serverPath = serverPath;
 	}
 
-	public static String getScriptPath() {
+	public String getScriptPath() {
 		return scriptPath;
 	}
 
-	public static void setScriptPath(String scriptPath) {
-		Config.scriptPath = scriptPath;
+	public void setScriptPath(String scriptPath) {
+		this.scriptPath = scriptPath;
 	}
 
-	public static String getThreadCount() {
+	public String getThreadCount() {
 		return threadCount;
 	}
 
-	public static void setThreadCount(String threadCount) {
-		Config.threadCount = threadCount;
+	public void setThreadCount(String threadCount) {
+		this.threadCount = threadCount;
 	}
 
-	public static String getPort() {
+	public String getPort() {
 		return port;
-	}
-
-	public static ArrayList<String> getServerList() {
-		return serverList;
-	}
-
-	public static void setServerList(ArrayList<String> serverList) {
-		Config.serverList = serverList;
-	}
-
-	public static String getCommand() {
-		return command;
-	}
-
-	public static void setCommand(String command) {
-		Config.command = command;
 	}
 
 }
