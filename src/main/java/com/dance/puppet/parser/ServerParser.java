@@ -1,25 +1,36 @@
 package com.dance.puppet.parser;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import org.apache.log4j.Logger;
-import com.dance.puppet.conf.Config;
-import com.dance.puppet.request.ServerList;
-import com.dance.puppet.util.FileHelper;
+import java.util.Scanner;
 
-public class ServerParser {
+import org.apache.log4j.Logger;
+
+public class ServerParser implements IParser {
 
 	static Logger											logger	= Logger.getLogger(ServerParser.class);
 
-	private static String							serverPath;
+	private ArrayList<String>	parserResult;
 
-	public static ArrayList<String> parseServer() {
-		return parseServer(Config.getInstance().getServerPath());
-	}
-
-	public static ArrayList<String> parseServer(String serverPath) {
+	public void parse(String serverPath) {
 		if (serverPath == null) {
 			logger.error("Can Not Parse Server : serverPath is null");
 		}
-		return FileHelper.fileToList("server/" + serverPath);
+		Scanner sc = null;
+		try {
+			sc = new Scanner(new File("server/" + serverPath));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		ArrayList<String> result = new ArrayList<String>();
+		while (sc.hasNext())
+			result.add(sc.next());
+		sc.close();
+		this.parserResult = result;
+	}
+
+	public void storeResult(ParserReader parserReader) {
+		parserReader.setServerList(this.parserResult);
 	}
 }

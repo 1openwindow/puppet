@@ -1,4 +1,4 @@
-package com.dance.puppet.parser;
+package com.dance.puppet.util;
 
 import java.util.HashMap;
 import java.util.Map;

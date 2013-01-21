@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import com.dance.puppet.conf.Config;
+import com.dance.puppet.parser.ParserReader;
 import com.dance.puppet.parser.ScriptParser;
 import com.dance.puppet.parser.ServerParser;
 import com.dance.puppet.processor.Engine;
@@ -52,7 +53,8 @@ public final class Bootstrap {
 		logger.info("Start Parse Sever List");
 		logger.info("========================================");
 		logger.info("");
-		Config.getInstance().setServerList(ServerParser.parseServer());
+		ParserReader.getInstance().parse(new ServerParser(), Config.getInstance().getServerPath());
+		//Config.getInstance().setServerList(ServerParser.parseServer());
 		logger.info("");
 		logger.info("========================================");
 		logger.info("Parse Server List Successfully");
@@ -67,7 +69,8 @@ public final class Bootstrap {
 		logger.info("Start Parse Script File");
 		logger.info("========================================");
 		logger.info("");
-		Config.getInstance().setCommand(ScriptParser.parseScript());
+		ParserReader.getInstance().parse(new ScriptParser(), Config.getInstance().getScriptPath());
+		//Config.getInstance().setCommand(ScriptParser.parseScript());
 		logger.info("");
 		logger.info("========================================");
 		logger.info("Parse Script File Successfully");
