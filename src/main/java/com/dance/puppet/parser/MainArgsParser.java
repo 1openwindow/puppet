@@ -1,11 +1,11 @@
-package com.dance.puppet.util;
+package com.dance.puppet.parser;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-public class MainArgsParser {
+public class MainArgsParser{
 
 	static Logger	logger	= Logger.getLogger(MainArgsParser.class);
 
