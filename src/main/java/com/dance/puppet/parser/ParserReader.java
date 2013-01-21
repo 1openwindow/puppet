@@ -17,8 +17,8 @@ public class ParserReader {
 
 	static Logger													logger	= Logger.getLogger(ServerParser.class);
 
-	private static ArrayList<String>			serverList;
-	private static String									commandList;
+	private ArrayList<String>							serverList;
+	private String												commandList;
 
 	private volatile static ParserReader	instance;
 
@@ -42,24 +42,24 @@ public class ParserReader {
 	}
 
 	public ArrayList<String> getServerList() {
-		if (instance.serverList == null) {
+		if (this.serverList == null) {
 			logger.info("ServerList is null, ServerPath has not been parsed");
 		}
-		return instance.serverList;
+		return this.serverList;
 	}
 
 	public void setServerList(ArrayList<String> serverList) {
-		instance.serverList = serverList;
+		this.serverList = serverList;
 	}
 
 	public String getCommandList() {
-		if (instance.commandList == null) {
+		if (this.commandList == null) {
 			logger.info("CommandList is null, CommandList has not been parsed");
 		}
-		return instance.commandList;
+		return this.commandList;
 	}
 
 	public void setCommandList(String commandList) {
-		instance.commandList = commandList;
+		this.commandList = commandList;
 	}
 }
