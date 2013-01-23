@@ -2,8 +2,9 @@ In Distriputing Enviroment, parallel execute script on mulit-servers at the same
 
 在分布式环境中，对多台服务器并行进行各类脚本命令操作
 
-Pre
-Install jdk, maven
+Pre Install
+1. JDK 1.5 or Above
+2. Maven
 
 How to Use
 1 set puppet_home
