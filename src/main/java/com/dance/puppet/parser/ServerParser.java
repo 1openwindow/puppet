@@ -1,9 +1,12 @@
 package com.dance.puppet.parser;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 import org.apache.log4j.Logger;
 
 public class ServerParser implements IParser {
@@ -16,16 +19,26 @@ public class ServerParser implements IParser {
 		if (serverPath == null) {
 			logger.error("Can Not Parse Server : serverPath is null");
 		}
-		Scanner sc = null;
+		ArrayList<String> result = new ArrayList<String>();
 		try {
-			sc = new Scanner(new File("server/" + serverPath));
+			BufferedReader reader = new BufferedReader(new FileReader(new File("server/" + serverPath)));
+			String line = null;
+
+			while ((line = reader.readLine()) != null) {
+				if (line.matches("^\\s*#.*")) {
+					continue;
+				} else {
+					result.add(line);
+				}
+			}
+
+			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		ArrayList<String> result = new ArrayList<String>();
-		while (sc.hasNext())
-			result.add(sc.next());
-		sc.close();
+		
 		this.parserResult = result;
 	}
 

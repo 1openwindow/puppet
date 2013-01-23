@@ -1,2 +1,4 @@
+# use # to comment out server
+# demo1.test.noaccess.com
 demo1.test.puppet.com
 demo2.test.puppet.com

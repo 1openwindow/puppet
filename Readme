@@ -7,8 +7,8 @@ Pre Install
 2. Maven
 
 How to Use
-1 set puppet_home
-2 mvn clean package 
+1 set $PUPPET_HOME
+2 run "mvn clean install" or "mvn clean package" 
 3 under $PUPPET_HOME
 	run "bin/puppet.sh -u puppet -p puppet -s server.list -c test.sh"
 	
