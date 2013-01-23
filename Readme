@@ -2,6 +2,10 @@ In Distriputing Enviroment, parallel execute script on mulit-servers at the same
 
 在分布式环境中，对多台服务器并行进行各类脚本命令操作
 
+Advantage
+1. Do not need to install Agent on remote server
+2. Parallel Execute
+
 Pre Install
 1. JDK 1.5 or Above
 2. Maven
