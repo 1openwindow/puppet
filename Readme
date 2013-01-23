@@ -11,5 +11,8 @@ How to Use
 2 mvn clean package 
 3 under $PUPPET_HOME
 	run "bin/puppet.sh -u puppet -p puppet -s server.list -c test.sh"
+	
+Notice: all server list files are under $PUPPET_HOME/server directory
+		all script files are under $PUPPET_HOME/script
 4 to see help document
 	run "bin/puppet.sh --help" 
