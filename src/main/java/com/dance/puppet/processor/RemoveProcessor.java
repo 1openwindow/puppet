@@ -1,6 +1,7 @@
 package com.dance.puppet.processor;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.jcraft.jsch.JSchException;
 
@@ -97,6 +98,18 @@ public class RemoveProcessor extends IProcessor{
 
 	@Override
 	void setPort(String port) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	ArrayList<String> getCommandList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	void setCommandList(ArrayList<String> command) {
 		// TODO Auto-generated method stub
 		
 	}

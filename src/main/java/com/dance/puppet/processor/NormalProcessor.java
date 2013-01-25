@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
@@ -28,6 +29,7 @@ public class NormalProcessor extends IProcessor {
 	private String							username;
 	private String							password;
 	private String							command;
+	private ArrayList<String>		commandList;
 	private String							host;
 	private String							port;
 
@@ -45,9 +47,15 @@ public class NormalProcessor extends IProcessor {
 			logger.info(fetchResponse());
 
 			if (isConnected()) {
-				logger.info(getCommand());
-				sendCommand(getCommand());
-				logger.info(fetchResponse());
+				for (String cmd : getCommandList()) {
+					if(cmd.trim().equalsIgnoreCase("")){
+						continue;
+					}
+					logger.info(cmd);
+					sendCommand(cmd);
+					// sendCommand(getCommand());
+					logger.info(fetchResponse());
+				}
 			}
 
 			logger.info("try to disconnect...");
@@ -92,10 +100,15 @@ public class NormalProcessor extends IProcessor {
 	}
 
 	public void sendCommand(String command) throws IOException {
-		command += " echo \"" + TERMINATOR + "\"\n";
+		command += "; echo \"" + TERMINATOR + "\"\n";
+		logger.info(command);
 		toServer.write(command.getBytes());
 		toServer.flush();
 		lastCommand = new String(command);
+	}
+
+	public void sendCommand(ArrayList<String> commandList) {
+
 	}
 
 	public String fetchResponse() throws IOException, InterruptedException {
@@ -110,9 +123,11 @@ public class NormalProcessor extends IProcessor {
 			}
 		}
 		String result = builder.toString();
-		int beginIndex = result.indexOf(TERMINATOR + "\"") + ((TERMINATOR + "\"").length());
-		result = result.substring(beginIndex);
-		return result.replaceAll(TextFormatUtil.escape(TERMINATOR), "").trim();
+		 int beginIndex = result.indexOf(TERMINATOR + "\"") + ((TERMINATOR +
+		 "\"").length());
+		 result = result.substring(beginIndex);
+		 return result.replaceAll(TextFormatUtil.escape(TERMINATOR), "").trim();
+		//return result;
 	}
 
 	public String getUsername() {
@@ -153,6 +168,14 @@ public class NormalProcessor extends IProcessor {
 
 	public void setPort(String port) {
 		this.port = port;
+	}
+
+	public ArrayList<String> getCommandList() {
+		return commandList;
+	}
+
+	public void setCommandList(ArrayList<String> commandList) {
+		this.commandList = commandList;
 	}
 
 }

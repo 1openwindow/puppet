@@ -23,7 +23,8 @@ public class Engine {
 			processor.setUsername(config.getUserName());
 			processor.setPassword(config.getPassword());
 			processor.setHost(host);
-			processor.setCommand(parserReader.getCommandList());
+			//processor.setCommand(parserReader.getCommandList());
+			processor.setCommandList(parserReader.getCommandList());
 			processor.setPort(config.getPort());
 			processorPool.submit(processor);
 		}

@@ -38,7 +38,7 @@ public class ServerParser implements IParser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		this.parserResult = result;
 	}
 

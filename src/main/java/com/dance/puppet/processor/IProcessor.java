@@ -1,6 +1,8 @@
 package com.dance.puppet.processor;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import com.jcraft.jsch.JSchException;
 
 public abstract class IProcessor implements Runnable {
@@ -27,6 +29,10 @@ public abstract class IProcessor implements Runnable {
 	abstract String getCommand();
 
 	abstract void setCommand(String command);
+
+	abstract ArrayList<String> getCommandList();
+
+	abstract void setCommandList(ArrayList<String> command);
 
 	abstract String getHost();
 

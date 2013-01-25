@@ -1,6 +1,8 @@
 package com.dance.puppet.processor;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import com.jcraft.jsch.JSchException;
 
 public class AnswerProcessor extends IProcessor {
@@ -49,7 +51,7 @@ public class AnswerProcessor extends IProcessor {
 	@Override
 	void setUsername(String username) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -61,7 +63,7 @@ public class AnswerProcessor extends IProcessor {
 	@Override
 	void setPassword(String password) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -73,7 +75,7 @@ public class AnswerProcessor extends IProcessor {
 	@Override
 	void setCommand(String command) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -85,7 +87,7 @@ public class AnswerProcessor extends IProcessor {
 	@Override
 	void setHost(String host) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -97,7 +99,19 @@ public class AnswerProcessor extends IProcessor {
 	@Override
 	void setPort(String port) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	ArrayList<String> getCommandList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	void setCommandList(ArrayList<String> command) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
