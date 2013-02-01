@@ -6,12 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ServerParser implements IParser {
 
-	static Logger							logger	= Logger.getLogger(ServerParser.class);
+	static final Logger				logger	= LoggerFactory.getLogger(ServerParser.class);
 
 	private ArrayList<String>	parserResult;
 

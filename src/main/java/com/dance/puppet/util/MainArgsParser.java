@@ -2,12 +2,12 @@ package com.dance.puppet.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.apache.log4j.Logger;
+public class MainArgsParser {
 
-public class MainArgsParser{
-
-	static Logger	logger	= Logger.getLogger(MainArgsParser.class);
+	static final Logger	logger	= LoggerFactory.getLogger(MainArgsParser.class);
 
 	public static Map parse(String[] args) {
 		if (args == null) {

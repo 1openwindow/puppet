@@ -1,7 +1,9 @@
 package com.dance.puppet.parser;
 
 import java.util.ArrayList;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Use to Read Server List and Script, after parse Server List and Script
@@ -13,7 +15,7 @@ import org.apache.log4j.Logger;
  */
 public class ParserReader {
 
-	static Logger													logger	= Logger.getLogger(ServerParser.class);
+	static final Logger													logger	= LoggerFactory.getLogger(ServerParser.class);
 
 	private ArrayList<String>							serverList;
 	// private String commandList;

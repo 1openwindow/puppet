@@ -7,7 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Parse Bash Script Text
@@ -17,10 +18,11 @@ import org.apache.log4j.Logger;
  */
 public class ScriptParser implements IParser {
 
-	static Logger		logger	= Logger.getLogger(ScriptParser.class);
+	static final Logger				logger	= LoggerFactory.getLogger(ScriptParser.class);
 
 	private ArrayList<String>	parserResult;
-	//private String	commandList;
+
+	// private String commandList;
 
 	public void parse(String path) {
 		if (path == null) {
@@ -48,20 +50,20 @@ public class ScriptParser implements IParser {
 		}
 
 		this.parserResult = result;
-		
-//		BufferedReader br;
-//		StringBuffer sb = new StringBuffer();
-//		try {
-//			br = new BufferedReader(new FileReader("script/" + path));
-//			while (br.ready()) {
-//				sb.append(br.readLine()).append(';');
-//			}
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		this.commandList = sb.toString();
+
+		// BufferedReader br;
+		// StringBuffer sb = new StringBuffer();
+		// try {
+		// br = new BufferedReader(new FileReader("script/" + path));
+		// while (br.ready()) {
+		// sb.append(br.readLine()).append(';');
+		// }
+		// } catch (FileNotFoundException e) {
+		// e.printStackTrace();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		// this.commandList = sb.toString();
 	}
 
 	public void storeResult(ParserReader parserReader) {

@@ -1,7 +1,7 @@
 package com.dance.puppet;
 
-import com.dance.puppet.logger.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Hello world!
@@ -9,15 +9,17 @@ import com.dance.puppet.logger.Logger;
  */
 public class App {
 	//static Logger	logger	= Logger.getLogger(App.class);
-	private static final String	CLASSNAME	= App.class.getName();
-	
+	//private static final String	CLASSNAME	= App.class.getName();
+	static Logger logger = LoggerFactory.getLogger(App.class);
+			
 	public static void main(String[] args) {
-		System.out.println("Hello World! Alpha Submmit. Final Alpha Thinks");
+		//System.out.println("Hello World! Alpha Submmit. Final Alpha Thinks");
 		//logger.debug("This is debug message");
 		//myMethod();
 		//logger.info("this is info message");
-		Logger.logWarnMessage(CLASSNAME, "main",
-				"Error while processing result from the netscalar ");
+		//Logger.logWarnMessage(CLASSNAME, "main",
+		//		"Error while processing result from the netscalar ");
+		logger.debug("hello {}", "world" );
 	}
 
 	public static void myMethod() {

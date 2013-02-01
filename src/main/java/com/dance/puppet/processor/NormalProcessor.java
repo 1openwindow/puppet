@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.dance.puppet.io.PuppetBufferdReader;
 import com.dance.puppet.util.TextFormatUtil;
 import com.jcraft.jsch.Channel;
@@ -24,7 +24,7 @@ import com.jcraft.jsch.Session;
  */
 public class NormalProcessor extends IProcessor {
 
-	static Logger								logger			= Logger.getLogger(NormalProcessor.class.getName());
+	static final Logger					logger			= LoggerFactory.getLogger(NormalProcessor.class.getName());
 
 	private String							username;
 	private String							password;
@@ -48,7 +48,7 @@ public class NormalProcessor extends IProcessor {
 
 			if (isConnected()) {
 				for (String cmd : getCommandList()) {
-					if(cmd.trim().equalsIgnoreCase("")){
+					if (cmd.trim().equalsIgnoreCase("")) {
 						continue;
 					}
 					logger.info(cmd);
@@ -123,11 +123,10 @@ public class NormalProcessor extends IProcessor {
 			}
 		}
 		String result = builder.toString();
-		 int beginIndex = result.indexOf(TERMINATOR + "\"") + ((TERMINATOR +
-		 "\"").length());
-		 result = result.substring(beginIndex);
-		 return result.replaceAll(TextFormatUtil.escape(TERMINATOR), "").trim();
-		//return result;
+		int beginIndex = result.indexOf(TERMINATOR + "\"") + ((TERMINATOR + "\"").length());
+		result = result.substring(beginIndex);
+		return result.replaceAll(TextFormatUtil.escape(TERMINATOR), "").trim();
+		// return result;
 	}
 
 	public String getUsername() {

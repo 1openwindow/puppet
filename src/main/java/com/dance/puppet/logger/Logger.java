@@ -1,6 +1,6 @@
 package com.dance.puppet.logger;
 
-import org.apache.log4j.Priority;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -10,7 +10,7 @@ import org.apache.log4j.Priority;
  * 
  */
 public class Logger {
-
+/*
 	private String	className	= null;
 
 	enum LogLevel {
@@ -27,7 +27,7 @@ public class Logger {
 	}
 
 	public void log(LogLevel logLevel, String methodName, String message) {
-		org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(className);
+		Logger logger = (Logger) LoggerFactory.getLogger(className);
 		Priority p = null;
 
 		switch (logLevel) {
@@ -73,5 +73,5 @@ public class Logger {
 	private static String getMessageString(String className, String methodName, String message) {
 		return className + "\t" + methodName + "\t" + message;
 	}
-
+*/
 }

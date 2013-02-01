@@ -1,8 +1,8 @@
 package com.dance.puppet.startup;
 
 import java.util.ArrayList;
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.dance.puppet.conf.Config;
 import com.dance.puppet.parser.ParserReader;
 import com.dance.puppet.parser.ScriptParser;
@@ -15,14 +15,18 @@ import com.dance.puppet.processor.Engine;
  * @author Chan Chen
  * 
  */
-public final class Bootstrap {
+public class Bootstrap {
 
-	static Logger							logger			= Logger.getLogger(Bootstrap.class);
+	static final Logger				logger			= LoggerFactory.getLogger(Bootstrap.class);
 
 	private String						onelineCommand;
 	private ArrayList<String>	serverList	= new ArrayList<String>();
 
 	public void start() {
+	}
+
+	public Bootstrap test() {
+		return this;
 	}
 
 	public Bootstrap loadConfig(String username, String password, String serverPath, String scriptPath) {
@@ -54,7 +58,7 @@ public final class Bootstrap {
 		logger.info("========================================");
 		logger.info("");
 		ParserReader.getInstance().parse(new ServerParser(), Config.getInstance().getServerPath());
-		//Config.getInstance().setServerList(ServerParser.parseServer());
+		// Config.getInstance().setServerList(ServerParser.parseServer());
 		logger.info("");
 		logger.info("========================================");
 		logger.info("Parse Server List Successfully");
@@ -70,7 +74,7 @@ public final class Bootstrap {
 		logger.info("========================================");
 		logger.info("");
 		ParserReader.getInstance().parse(new ScriptParser(), Config.getInstance().getScriptPath());
-		//Config.getInstance().setCommand(ScriptParser.parseScript());
+		// Config.getInstance().setCommand(ScriptParser.parseScript());
 		logger.info("");
 		logger.info("========================================");
 		logger.info("Parse Script File Successfully");
