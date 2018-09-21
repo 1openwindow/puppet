@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+ http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"
+	default-autowire="byName">
+
+	<bean id="bootstrapLogger" class="com.dance.puppet.logger.BootstrapLogger" />
+	<bean id="bootstrap" class="com.dance.puppet.startup.Bootstrap" />
+
+	<aop:config>
+		<aop:aspect id="bootstrapLoggerAsp" ref="bootstrapLogger">
+			<aop:pointcut id="target"
+				expression="execution(* com.dance.puppet.startup.Bootstrap.test(..))" />
+			<aop:before method="beforeMethod" pointcut-ref="target" />
+			<aop:after method="afterMethod" pointcut-ref="target" />
+		</aop:aspect>
+	</aop:config>
+</beans>
